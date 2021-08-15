@@ -8,9 +8,24 @@ import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
+    /**
+     * board for storing layout for the Game and changing board on clicks
+     */
     lateinit var  board : Array<Array<Button>>
+
+    /**
+     * boolean vlaue for storing player turn
+     */
     var playerOneTurn : Boolean = true
+
+    /**
+     * var for storing turns completed
+     */
     var turnCount = 0
+
+    /**
+     * Array for storing board Status
+     */
     var boardStatus  = Array(3){IntArray(3)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +49,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         initialiseBoardStatus()
     }
 
+    /**
+     * method for initialiseBoardStatus when reset is clicked or game is completed
+     */
     private fun initialiseBoardStatus() {
         for( i in 0..2){
             for( j in 0..2){
@@ -45,6 +63,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         displayStatus.text  = "Player X turn"
     }
 
+    /**
+     * on Click Method implemented for all views
+     */
     override fun onClick(v: View) {
        when(v.id){
 
@@ -79,6 +100,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
        }
     }
 
+    /**
+     * method called when any value is updated or clicked inside board
+     */
     private fun updateValue(row: Int, col: Int, playerOneTurn: Boolean) {
         val text  =  if(playerOneTurn) "X" else "0"
         val value =  if(playerOneTurn) 1 else 0
@@ -95,6 +119,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 
+    /**
+     * method to set Display Turn Status on screen based on Player turn or result
+     */
     private fun setDisPlayTurnStatus(playerOneTurn: Boolean) {
        if(turnCount ==9){
            setDisplayStatus("Draw")
@@ -107,6 +134,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
 
+    /**
+     * method to check winner after every turn
+     */
     private fun checkWinner(row: Int, col: Int) {
 
         //  horizontal Row Winner
@@ -131,6 +161,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 
+    /**
+     * diplay status on board if winner is found after turn
+     */
     private fun checkBoardStatusValueForDisplayWinner(row: Int, col: Int) {
         if(boardStatus[row][col]==1){
             setDisplayStatus("Player X is Winner")
@@ -143,6 +176,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
 
+    /**
+     * method to set diplay Status on Board based on display Text
+     */
     private fun setDisplayStatus(displayText: String) {
         displayStatus.apply{
           text = displayText
@@ -152,6 +188,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         }
 
     }
+
+    /**
+     * method to disable buttons after game is reset or completed
+     */
 
     private fun disableButtons() {
         for(i in 0..2){
